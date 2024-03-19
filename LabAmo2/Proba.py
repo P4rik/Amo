@@ -240,7 +240,7 @@ def clear_entries():
 #labels win2
 labelfr1 = tk.Label(panel2, text="Задайте довжину для кожної матриці:", font=('Calibri', 25, 'bold'), bg='#252425',
                     fg='white')
-M1 = tk.Label(panel2, text='1 =', bg='#252425', fg='white', font=('Calibri', 20, 'bold'))
+M1 = tk.Label(panel2, text='1 =', bg='#252425', fg='white', font=('Calibri', 60, 'bold'))
 M2 = tk.Label(panel2, text='2 =', bg='#252425', fg='white', font=('Calibri', 20, 'bold'))
 M3 = tk.Label(panel2, text='3 =', bg='#252425', fg='white', font=('Calibri', 20, 'bold'))
 M4 = tk.Label(panel2, text='4 =', bg='#252425', fg='white', font=('Calibri', 20, 'bold'))
