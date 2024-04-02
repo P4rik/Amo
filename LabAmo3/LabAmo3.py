@@ -172,11 +172,14 @@ def generate_plot1():
     num_points = int(points_entry.get())
     x_val = float(x_entry.get())
 
-    # Визначення точок для візуалізації інтерполяції
-    x_vals = []
+    h = (b_val - a_val) / (num_points - 1)
+    xi = []
     for i in range(num_points):
-        x_vals.append(uniform(a_val, b_val))
-    x_vals.sort()
+        xi.append(a_val + h * i)
+    yi = [f(i) for i in xi]
+
+    # Визначення точок для візуалізації інтерполяції
+    x_vals = [a_val + (b_val - a_val) * i / 500 for i in range(500)]
     y_interp = [lagrange_formula(xi, yi, x_val) for x_val in x_vals]
     y_exact = [f(i) for i in x_vals]
 
@@ -215,17 +218,14 @@ def generate_plot2():
     num_points = int(points_entry.get())
     x_val = float(x_entry.get())
 
-    # Генерація вузлів інтерполяції
     h = (b_val - a_val) / (num_points - 1)
     xi = []
     for i in range(num_points):
         xi.append(a_val + h * i)
     yi = [f2(i) for i in xi]
 
-    x_vals = []
-    for i in range(num_points):
-        x_vals.append(uniform(a_val, b_val))
-    x_vals.sort()
+    # Визначення точок для візуалізації інтерполяції
+    x_vals = [a_val + (b_val - a_val) * i / 500 for i in range(500)]  # Згладжуємо графік, використовуючи більшу кількість точок
     y_interp = [lagrange_formula(xi, yi, x_val) for x_val in x_vals]
     y_exact = [f2(i) for i in x_vals]
 
@@ -265,7 +265,7 @@ def generate_plot3():
     # Створення графіка
     fig, ax = plt.subplots()
     ax.plot(range(1, num_points + 1), errors, marker='o')
-    ax.set_title('Залежність похибки від кількості точок')
+    ax.set_title('Графік похибки інтерполяції')
     ax.set_xlabel('Кількість точок')
     ax.set_ylabel('Похибка')
     ax.grid(True)
@@ -284,7 +284,7 @@ win.geometry("")
 win.resizable(False, False)
 
 G = 24
-N = 20
+N = 19
 
 # frame
 panel = tk.Frame(win, bg='#252425', relief=tk.RAISED, bd=5).grid(row=0, rowspan=11, column=0, sticky='snew')
@@ -378,11 +378,11 @@ button_generate = tk.Button(panel3, text="Згенерувати таблицю"
 labelfr3 = tk.Label(panel4, text="Генерація графіків:", font=('Calibri', 25, 'bold'), bg='#252425',
                     fg='white')
 
-button_generate1 = tk.Button(panel4, text='Згенерувати практичний графік', font=('Calibri', 25, 'bold'), bg='#977AF9',
+button_generate1 = tk.Button(panel4, text='Згенерувати графік Лагранжа', font=('Calibri', 25, 'bold'), bg='#977AF9',
                              relief=tk.RAISED, activebackground='#760598', bd=5, fg='white', command=generate_plot1)
-button_generate2 = tk.Button(panel4, text='Згенерувати теоретичний графік', font=('Calibri', 25, 'bold'), bg='#977AF9',
+button_generate2 = tk.Button(panel4, text='Згенерувати графік sin(x)', font=('Calibri', 25, 'bold'), bg='#977AF9',
                              relief=tk.RAISED, activebackground='#760598', bd=5, fg='white', command=generate_plot2)
-button_generate3 = tk.Button(panel4, text='Згенерувати теоретичний графік', font=('Calibri', 25, 'bold'), bg='#977AF9',
+button_generate3 = tk.Button(panel4, text='Згенерувати графік похибок', font=('Calibri', 25, 'bold'), bg='#977AF9',
                              relief=tk.RAISED, activebackground='#760598', bd=5, fg='white', command=generate_plot3)
 
 win.mainloop()
