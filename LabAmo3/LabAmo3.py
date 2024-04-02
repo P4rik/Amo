@@ -12,7 +12,6 @@ canvas = None
 canvas_sin = None
 canvas_errors = None
 
-
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -20,7 +19,6 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
-
 
 def select_method():
     global canvas, canvas_complexity
@@ -77,13 +75,10 @@ def select_method():
         if canvas_errors is not None:
             canvas_errors.get_tk_widget().grid_forget()
 
-
 def f(x):
     return x ** 2 + 2 * exp(x)
-
 def f2(x):
     return sin(x)
-
 
 def lagrange_formula(x_nodes, y_nodes, x):
     result = 0
@@ -97,7 +92,6 @@ def lagrange_formula(x_nodes, y_nodes, x):
                 temp *= (x - x_nodes[j]) / (x_nodes[i] - x_nodes[j])
         result += temp * y_nodes[i]
     return result
-
 
 def generate_table():
     global xi, yi
@@ -213,7 +207,6 @@ def generate_plot1():
     canvas.draw()
     canvas.get_tk_widget().grid(row=1, column=3, rowspan=5, padx=15)
 
-
 def generate_plot2():
     global canvas_sin
     # Отримання введених значень
@@ -281,8 +274,6 @@ def generate_plot3():
     canvas_errors.draw()
     canvas_errors.get_tk_widget().grid(row=1, column=7, rowspan=5, padx=15)
 
-
-
 # Win 1
 win = tk.Tk()
 photo = tk.PhotoImage(file=(resource_path('icon.png')))
@@ -324,8 +315,6 @@ radb3 = tk.Radiobutton(panel, text='Згенерувати графіки', vari
                        bg='#977AF9',
                        fg='black', state=tk.NORMAL, width=22, activebackground='#760598', relief=tk.RAISED,
                        bd='5', command=select_method).grid(row=3, column=0, pady=(10, 10), padx=(15, 15))
-
-
 # win2
 def load_data():
     file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
@@ -346,12 +335,9 @@ def load_data():
     else:
         messagebox.showwarning(title='Попередження', message="Ви не обрали файл!")
 
-
 def clear_entries():
     for entry in length_entries:
         entry.delete(0, tk.END)
-
-
 # labels
 labelfr1 = tk.Label(panel2, text="Задайте значення:", font=('Calibri', 25, 'bold'), bg='#252425', fg='white')
 a_label = tk.Label(panel2, text="Введіть a:", bg='#252425', fg='white', font=('Calibri', 20, 'bold'))
