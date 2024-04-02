@@ -251,7 +251,7 @@ def generate_plot2():
     ax.plot(x_data, y_data2, label='Вихідна функція')
     ax.plot(x_data, y_data, label='Інтерпольована функція')
     ax.scatter(xi, yi, color='red', label='Вузли інтерполяції')
-    ax.scatter(x_val, f(x_val), color='blue', label=f'Точка (x)')
+    ax.scatter(x_val, f2(x_val), color='blue', label=f'Точка (x)')
     ax.scatter(x_val, lagrange_formula(xi, yi, x_val), color='green', label=f'Точка(x) інтерпольована')
     ax.set_title('Інтерполяція за допомогою функції sin(x)')
     ax.set_xlabel('a')
@@ -263,78 +263,24 @@ def generate_plot2():
     canvas_sin.draw()
     canvas_sin.get_tk_widget().grid(row=1, column=5, rowspan=5, padx=15)
 
-
-
 def generate_plot3():
     global canvas_errors
-    # Отримання введених значень
-    a_val = float(a_entry.get())
-    b_val = float(b_entry.get())
-    num_points = int(points_entry.get())
-    x_val = float(x_entry.get())
+    # Отримання значень з таблиці
+    errors = [float(results_table.item(item, 'values')[0]) for item in results_table.get_children()]
+    num_points = len(errors)
 
-    # Генерація вузлів інтерполяції
-    h = (b_val - a_val) / (num_points - 1)
-    xi = []
-    for i in range(num_points):
-        xi.append(a_val + h * i)
-    yi = [f2(i) for i in xi]
-
-    # Визначення точок для візуалізації інтерполяції
-    x_vals = []
-    for i in range(num_points):
-        x_vals.append(uniform(a_val, b_val))
-    y_interp = [lagrange_formula(xi, yi, x_val) for x_val in x_vals]
-    y_exact = [f(i) for i in x_vals]
-
-    x_data = []
-    for i in xi:
-        x_data.append(i)
-    for i in x_vals:
-        x_data.append(i)
-    x_data.append(x_val)
-    x_data.sort()
-    y_data = [lagrange_formula(xi, yi, x) for x in x_data]
-    y_data2 = [f2(i) for i in x_data]
-
-    while True:
-        additionalNode = uniform(a_val, b_val)
-        if additionalNode not in xi:
-            for i in range(len(xi)):
-                if xi[i] > additionalNode:
-                    xi.insert(i - 1, additionalNode)
-                    yi.insert(i - 1, f(additionalNode))
-                    break
-            break
-
-    nextInterpolationList = [lagrange_formula(xi, yi, i) for i in x_vals]
-
-    interpolationDiff = []
-    for i in range(len(y_interp)):
-        if y_interp[i] - nextInterpolationList[i] != 0:
-            interpolationDiff.append(y_interp[i] - nextInterpolationList[i])
-        else:
-            interpolationDiff.append(0.0000001)
-
-    listOfK = []
-    diff = []
-    l = len(y_interp)
-    for i in range(l):
-        diff.append(y_interp[i] - y_exact[i])
-        listOfK.append(1 - diff[i] / interpolationDiff[i])
-
-
-    # Виведення графіка
+    # Створення графіка
     fig, ax = plt.subplots()
-    ax.plot(range(1, len(xi)), diff, marker='o', linestyle='-')
-    ax.set_title('Зміна похибок')
-    ax.set_xlabel('Кількість вузлів')
+    ax.plot(range(1, num_points + 1), errors, marker='o')
+    ax.set_title('Залежність похибки від кількості точок')
+    ax.set_xlabel('Кількість точок')
     ax.set_ylabel('Похибка')
     ax.grid(True)
 
     canvas_errors = FigureCanvasTkAgg(fig, master=panel3)
     canvas_errors.draw()
     canvas_errors.get_tk_widget().grid(row=1, column=7, rowspan=5, padx=15)
+
 
 
 # Win 1
